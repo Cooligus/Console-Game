@@ -1,0 +1,16 @@
+﻿{
+  "config": {
+    "sizeX": 20,
+    "sizeY": 10,
+    "playerPositionX": 2,
+    "playerPositionY": 2,
+    "enemiesAmount": 3,
+    "addFrames": true,
+    "replaceSpaceByFrame": false,
+    "spaceChar": " ",
+    "frameChar": "#",
+    "playerSprite": "☻",
+    "enemySprite": "☺",
+    "pointSprite": "$"
+  }
+}

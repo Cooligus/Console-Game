@@ -1,0 +1,98 @@
+﻿///////////////////////////////////////////////////////////
+/// This is free and unencumbered software released into the public domain.
+///
+/// Anyone is free to copy, modify, publish, use, compile, sell, or
+/// distribute this software, either in source code form or as a compiled
+/// binary, for any purpose, commercial or non - commercial, and by any
+/// means.
+///
+/// In jurisdictions that recognize copyright laws, the author or authors
+/// of this software dedicate any and all copyright interest in the
+/// software to the public domain.We make this dedication for the benefit
+/// of the public at large and to the detriment of our heirs and
+/// successors.We intend this dedication to be an overt act of
+/// relinquishment in perpetuity of all present and future rights to this
+/// software under copyright law.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+/// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+/// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+/// IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+/// OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+/// ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+/// OTHER DEALINGS IN THE SOFTWARE.
+///
+/// For more information, please refer to < http://unlicense.org/ >
+///////////////////////////////////////////////////////////
+
+#include "game.h"
+#include <fstream>
+
+//define main function
+int main() 
+{
+
+//do everything in it if CURSES_AVAILABLE is defined
+#ifdef CURSES_AVAILABLE
+
+    std::ofstream file;
+    file.open("output.txt", std::fstream::out);
+    file << "hello";
+
+	//set locale to all
+	std::locale::global(std::locale(""));
+
+    file << "i am before game";
+
+	//check if curses initscr return true else end program
+	if (!initscr())
+		return -1;
+
+	//disable possibility of writing with getch()
+	noecho();
+
+
+
+	//define game object
+	Game game(getConfigFromJSON());
+
+	//show everything first time
+	game.show();
+
+    file << "lol";
+
+	//do until end
+	while (1)
+	{
+		//generate next frame
+		game.newFrame();
+
+        file << "next loop";
+
+		//end loop if game is ended
+		if(game.isEnded())
+			break;
+
+		//refresh window
+		refresh();
+	}
+
+    file.close();
+
+	//end work of curses
+	endwin();
+
+//if curses library isn't available do it
+#else
+
+	//print it
+	printf("Can't find curses library, so program can't run. Please try install it. If you don't know how to do it, you can look for some tutorials in internet.\nWrite something and press enter to exit.");
+
+	//wait until clik
+	scanf(" ");
+
+#endif
+	
+	//end program
+	return 0;
+}

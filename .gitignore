@@ -1,0 +1,8 @@
+# IDE's
+.vs
+.idea
+
+# CMake stuffs
+[Oo]ut
+[Bb]uild
+cmake-build-*/
