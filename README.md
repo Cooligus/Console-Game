@@ -1,8 +1,6 @@
 # Console-Game 
 It's a really tiny project that is a game you can play in console. If you want to change settings without changing code, use [ConfigCG.json](rc/ConfigCG.json) file.
 
-[![License](https://img.shields.io/github/license/cooligus/Mactangle?style=for-the-badge)](LICENSE.md)
-
 ### Version
 1.5.1
 
