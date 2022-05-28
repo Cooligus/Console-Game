@@ -26,11 +26,9 @@
 ///////////////////////////////////////////////////////////
 
 #include "game.h"
-
-#ifdef CURSES_AVAILABLE
 #include <cctype>
 
-Game::Game(unsigned int sizeX, unsigned int sizeY, unsigned int playerPositionX, unsigned int playerPositionY, unsigned int enemiesAmount, bool addFrames, bool replaceSpaceByFrame, cchar_t spaceChar, cchar_t frameChar, cchar_t playerSprite, cchar_t pointSprite, cchar_t enemySprite)
+Game::Game(unsigned int sizeX, unsigned int sizeY, unsigned int playerPositionX, unsigned int playerPositionY, unsigned int enemiesAmount, bool addFrames, bool replaceSpaceByFrame, char spaceChar, char frameChar, char playerSprite, char pointSprite, char enemySprite)
     :m_board(sizeX, sizeY, spaceChar, addFrames, replaceSpaceByFrame, frameChar), m_points(0), m_enemiesAmount(enemiesAmount), m_started(false), m_ended(false), m_playerKilled(false), m_startPlayerPosX(playerPositionX), m_startPlayerPosY(playerPositionY)
 {    
     //prepare board
@@ -38,11 +36,11 @@ Game::Game(unsigned int sizeX, unsigned int sizeY, unsigned int playerPositionX,
 }
 
 Game::Game(nlohmann::json configuration)
-    :m_board(configuration[SIZE_X].get<unsigned int>(),configuration[SIZE_Y].get<unsigned int>(),getCchar_t(configuration[SPACE_CHAR].get<nlohmann::json::string_t>()), configuration[ADD_FRAMES].get<bool>(), configuration[REPLACE_SPACE].get<bool>(), getCchar_t(configuration[FRAME_CHAR]))
+    :m_board(configuration[SIZE_X].get<unsigned int>(),configuration[SIZE_Y].get<unsigned int>(),getchar(configuration[SPACE_CHAR].get<nlohmann::json::string_t>()), configuration[ADD_FRAMES].get<bool>(), configuration[REPLACE_SPACE].get<bool>(), getchar(configuration[FRAME_CHAR]))
 {
     //prepare board
     prepareBoard(configuration[PLAYER_POSITION_X].get<unsigned int>(), configuration[PLAYER_POSITION_Y].get<unsigned int>(),
-                 getCchar_t(configuration[PLAYER_SPRITE]), getCchar_t(configuration[POINT_SPRITE]), getCchar_t(configuration[ENEMY_SPRITE]));
+                 getchar(configuration[PLAYER_SPRITE]), getchar(configuration[POINT_SPRITE]), getchar(configuration[ENEMY_SPRITE]));
 
     m_file.open("output.txt", std::fstream::out);
     m_file << "lol";
@@ -87,7 +85,7 @@ void Game::cleanTraceOfPositioned(Positioned toClean)
     m_board.changeCharacter(m_board.getCharOfSpace(), toClean.getPositionX(), toClean.getPositionY());
 }
 
-bool Game::makeMove(cchar_t character)
+bool Game::makeMove(char character)
 {
     //end game
     if (tolower(character) == 'e')
@@ -184,7 +182,7 @@ bool Game::repairIndex(int& index)
     return temp != index;
 }
 
-void Game::prepareBoard(unsigned int playerPositionX, unsigned int playerPositionY, cchar_t playerSprite, cchar_t pointSprite, cchar_t enemySprite)
+void Game::prepareBoard(unsigned int playerPositionX, unsigned int playerPositionY, char playerSprite, char pointSprite, char enemySprite)
 {
     //repair sizes
     unsigned int sizeX = m_board.getSizeX();
@@ -542,5 +540,3 @@ bool Game::isPositionedFree(bool enemy, int index)
     //return success and point's freedom
     return true;
 }
-
-#endif

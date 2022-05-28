@@ -40,5 +40,5 @@ struct Enemies
 	std::vector<Positioned> elements;
 
 	//character that will represent enemy on board
-	cchar_t sprite;
+	char sprite;
 };

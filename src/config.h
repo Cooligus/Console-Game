@@ -67,10 +67,10 @@ nlohmann::json setupConfig(nlohmann::json variable);
 nlohmann::json checkConfig(nlohmann::json config);
 
 /// <summary>
-/// Check is string normal character or not, push it into cchar_t and return.
+/// Check is string normal character or not, push it into char and return.
 /// </summary>
 /// <param name="jsonVar">- json variable.</param>
-cchar_t getCchar_t(nlohmann::json jsonVar);
+char getchar(nlohmann::json jsonVar);
 
 /// <summary>
 /// Check does JSON variable is properly set.

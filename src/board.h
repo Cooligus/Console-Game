@@ -54,7 +54,7 @@ public:
     /// <param name="xEnd">- That informs function where end getting characters from axle x. If it's 0, function will return all characters from axle or if it's more than width of board it will be changed to weight of board.</param>
     /// <param name="yEnd">- That informs function where end getting characters from axle y. If it's 0, function will return all characters from axle or if it's more than width of board it will be changed to height of board.</param>
     /// <returns>Array of characters that creates board.</returns>
-    vector<vector<cchar_t>> getCharacters(unsigned int xStart = 0, unsigned int yStart = 0, unsigned int xEnd = 0, unsigned int yEnd = 0) const;
+    vector<vector<char>> getCharacters(unsigned int xStart = 0, unsigned int yStart = 0, unsigned int xEnd = 0, unsigned int yEnd = 0) const;
     
     /// <summary>
     /// You can replace some characters by that character that you like to.
@@ -72,7 +72,7 @@ public:
     /// <param name="replacement">- Character that will replace chosen character.</param>
     /// <param name="positionX">- Position on axle X of character that is shall be replaced by replacement.</param>
     /// <param name="positionY">- Position on axle Y of character that is shall be replaced by replacement.</param>
-    void changeCharacter(cchar_t replacement, unsigned int positionX = 0, unsigned int positionY = 0);
+    void changeCharacter(char replacement, unsigned int positionX = 0, unsigned int positionY = 0);
 
     /// <summary>
     /// Displays charcters that create board. It uses getCharacters() method.
@@ -174,12 +174,12 @@ private:
     /// <summary>
     /// Specifies which character will be used to make a free space, actual board.
     /// </summary>
-    cchar_t m_space;
+    char m_space;
 
     /// <summary>
     /// Specifies which character will be used to make a frame.
     /// </summary>
-    cchar_t m_frame;
+    char m_frame;
 
     /// <summary>
     /// Specifies board's size on axle X.
@@ -194,5 +194,5 @@ private:
     /// <summary>
     /// Array that contains character which create the board.
     /// </summary>
-    mutable vector<vector<cchar_t>> m_gamePool;
+    mutable vector<vector<char>> m_gamePool;
 };

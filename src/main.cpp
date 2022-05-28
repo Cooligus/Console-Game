@@ -27,13 +27,12 @@
 
 #include "game.h"
 #include <fstream>
+#include <locale>
 
 //define main function
 int main() 
 {
-
-//do everything in it if CURSES_AVAILABLE is defined
-#ifdef CURSES_AVAILABLE
+	setlocale(LC_ALL, "");
 
     std::ofstream file;
     file.open("output.txt", std::fstream::out);
@@ -50,8 +49,6 @@ int main()
 
 	//disable possibility of writing with getch()
 	noecho();
-
-
 
 	//define game object
 	Game game(getConfigFromJSON());
@@ -81,17 +78,6 @@ int main()
 
 	//end work of curses
 	endwin();
-
-//if curses library isn't available do it
-#else
-
-	//print it
-	printf("Can't find curses library, so program can't run. Please try install it. If you don't know how to do it, you can look for some tutorials in internet.\nWrite something and press enter to exit.");
-
-	//wait until clik
-	scanf(" ");
-
-#endif
 	
 	//end program
 	return 0;

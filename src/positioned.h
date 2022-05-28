@@ -42,7 +42,7 @@ public:
     /// <param name="posX">- Set where point will be on axle x. </param>
     /// <param name="posY">- Set where point will be on axle y. </param>
     /// <param name="sprite">- Specifies which character will illustrate the positioned object. </param>
-    Positioned(unsigned int posX = 1, unsigned int posY = 1, cchar_t sprite = '*');
+    Positioned(unsigned int posX = 1, unsigned int posY = 1, char sprite = '*');
 
     /// <summary>
     /// Destructor.
@@ -113,7 +113,7 @@ public:
     /// Use it to get position of point on axis X.
     /// </summary>
     /// <returns>Position of point on axis X.</returns>
-    cchar_t getSprite();
+    char getSprite();
 
 private:
     /// <summary>
@@ -139,5 +139,5 @@ private:
     /// <summary>
     /// Specifies which character will illustrate the positioned object.
     /// </summary>
-    cchar_t m_sprite;
+    char m_sprite;
 };

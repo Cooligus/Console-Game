@@ -31,15 +31,17 @@ cmake_minimum_required (VERSION 3.0)
 # Set up project
 project (Console-Game VERSION 1.5.1)
 
+set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
+
 # Set project executable
 add_executable (Console-Game
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/board.cpp"
-		"${CMAKE_CURRENT_SOURCE_DIR}/src/direction.cpp"
-		"${CMAKE_CURRENT_SOURCE_DIR}/src/game.cpp"
-		"${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
-		"${CMAKE_CURRENT_SOURCE_DIR}/src/positioned.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/config.cpp"
-		"${CMAKE_CURRENT_SOURCE_DIR}/rc/icon.rc"
+    "${SRC_DIR}/board.cpp"
+    "${SRC_DIR}/direction.cpp"
+    "${SRC_DIR}/game.cpp"
+    "${SRC_DIR}/main.cpp"
+    "${SRC_DIR}/positioned.cpp"
+    "${SRC_DIR}/config.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/rc/icon.rc"
         )
 
 
@@ -92,7 +94,7 @@ foreach(VAR_NAME ${GAME_NAMES})
     add_definitions(-D${VAR_NAME}="${CG_VAR_NAME}")
 
     # Set current variable to parrent scope
-    set(${VAR_NAME} ${VAR_NAME})
+    set(${VAR_NAME} ${CG_VAR_NAME})
 
     # Increment incrementer
     math(EXPR INCREMENTER "${INCREMENTER}+1")
@@ -101,20 +103,11 @@ endforeach()
 
 # Configure file with default definitions
 configure_file("src/definitions.in.h" "src/definitions.h")
-
 include_directories(${PROJECT_BINARY_DIR})
 
-# Set paths
-set(LIBS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs")
-set(PDCURSES_DIR "${LIBS_DIR}/PDCurses")
-set(JSON_DIR "${LIBS_DIR}/json")
-
-
-# Add JSON to project
-add_subdirectory(${JSON_DIR})
-
-# Link libs with ConsoleGame executable
-target_link_libraries(Console-Game nlohmann_json::nlohmann_json)
+find_package(nlohmann_json REQUIRED)
+include_directories(${NLOHMANN_INCLUDE_DIR})
+target_link_libraries(Console-Game ${NLOHMANN_LIBRARIES})
 
 # Set up pdcurses if it's windows
 if(WIN32 OR MSVC)
@@ -122,32 +115,15 @@ if(WIN32 OR MSVC)
     # Add special definition to have wide characters
     add_definitions(-DPDC_WIDE)
     
-    # Add all pdcurses stuffs
-    file(GLOB GLOBAL_PDCURSES_SRC "${PDCURSES_DIR}/pdcurses/*.c")
-    file(GLOB WINCON_PDCURSES_SRC "${PDCURSES_DIR}/wincon/*.c")
-    
-    # Add PDCurses library
-    add_library(PDCurses
-        ${GLOBAL_PDCURSES_SRC}
-        ${WINCON_PDCURSES_SRC}
-    )
-    
-    # Add pdcurses include dir
-    target_include_directories(PDCurses
-    PUBLIC
-    ${PDCURSES_DIR}
-    )
-
-    # Link libs with ConsoleGame executable
-    target_link_libraries(Console-Game PDCurses)
-
-
 else()
+
+    set(CURSES_NEED_NCURSES TRUE)
+    set(CURSES_NEED_WIDE TRUE)
 
     #Find and include curses
     find_package(Curses REQUIRED)
-    target_link_libraries(${CURSES_LIBRARIES})
-    target_include_directories(${CURSES_INCLUDE_DIR})
+    include_directories(${CURSES_INCLUDE_DIR})
+    target_link_libraries(Console-Game ${CURSES_LIBRARIES})
 
 endif()
 

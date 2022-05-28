@@ -28,10 +28,11 @@
 #include "src/definitions.h"
 #include "config.h"
 #include <fstream>
+#include <iostream>
 #include <locale>
 
-//using json
-using json = nlohmann::json;
+#define EXPAND(x) x
+#define GET_DEF(n) EXPAND(n ## _DEF)
 
 //define function
 nlohmann::json getConfigFromJSON(std::string path)
@@ -52,10 +53,10 @@ nlohmann::json getConfigFromJSON(std::string path)
 	else
 	{
 		//parse json file
-		json fileContent = json::parse(file);
+		nlohmann::json fileContent = nlohmann::json::parse(file);
 
 
-		json configContent = fileContent["config"];
+		nlohmann::json configContent = fileContent["config"];
 
         toReturn = setupConfig(configContent);
 	}
@@ -96,24 +97,24 @@ nlohmann::json checkConfig(nlohmann::json config)
 }
 
 //define converter
-cchar_t getCchar_t(json jsonVar)
+char getchar(nlohmann::json jsonVar)
 {
 	//define output
-	cchar_t output = ' ';
+	char output = ' ';
 	
 	//push to jsonOutput content of json variable
-	std::string jsonOutput = jsonVar.get<json::string_t>();
+	//std::string jsonOutput = jsonVar.get<json::string_t>();
 
 	// define converter
-	std::wstring_convert<std::codecvt<char16_t, char, std::mbstate_t>, char16_t> convert;
+	//std::wstring_convert<std::codecvt<char16_t, char, std::mbstate_t>, char16_t> convert;
 
 	// convert json content from utf-8 tp utf-16
-	std::u16string u16 = convert.from_bytes(jsonOutput.c_str());
+	//std::u16string u16 = convert.from_bytes(jsonOutput.c_str());
 
-	//push to cchar_t first utf-16 character from json variable
-	output = u16[0];
+	//push to char first utf-16 character from json variable
+	//output = u16[0];
 
-	//return cchar_t
+	//return char
 	return output;
 }
 
@@ -121,7 +122,7 @@ cchar_t getCchar_t(json jsonVar)
 template<>
 bool checkJSON<VarType::UNSIGNED>(nlohmann::json variable, const char *varName)
 {
-	if (!variable[varName].empty() && variable[varName].type() == json::value_t::number_unsigned)
+	if (!variable[varName].empty() && variable[varName].type() == nlohmann::json::value_t::number_unsigned)
         return true;
 	else
 		return false;
@@ -131,7 +132,7 @@ bool checkJSON<VarType::UNSIGNED>(nlohmann::json variable, const char *varName)
 template<>
 bool checkJSON<VarType::BOOL>(nlohmann::json variable, const char *varName)
 {
-	if (!variable[varName].empty() && variable[varName].type() == json::value_t::boolean)
+	if (!variable[varName].empty() && variable[varName].type() == nlohmann::json::value_t::boolean)
 		return true;
 	else
 		return false;
@@ -141,7 +142,7 @@ bool checkJSON<VarType::BOOL>(nlohmann::json variable, const char *varName)
 template<>
 bool checkJSON<VarType::STRING>(nlohmann::json variable, const char *varName)
 {
-	if (!variable[varName].empty() && variable[varName].type() == json::value_t::string)
+	if (!variable[varName].empty() && variable[varName].type() == nlohmann::json::value_t::string)
 		return true;
 	else
 		return false;
@@ -164,7 +165,7 @@ void setupJSONVariable<VarType::BOOL>(nlohmann::json variable, nlohmann::json &c
 	if (checkJSON<VarType::BOOL>(variable, varName))
 		config[varName] = variable[varName];
 	else
-        config[varName] = std::string(varName).append(DEFAULT_PREPOSITION);
+		config[varName] = GET_DEF(varName);
 }
 
 //define string typed setup
@@ -174,7 +175,7 @@ void setupJSONVariable<VarType::STRING>(nlohmann::json variable, nlohmann::json 
 	if (checkJSON<VarType::STRING>(variable, varName))
 		config[varName] = variable[varName];
 	else
-		config[varName] = std::string(varName).append(DEFAULT_PREPOSITION);
+		config[varName] = GET_DEF(varName);
 }
 
 

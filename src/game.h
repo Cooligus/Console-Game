@@ -52,7 +52,7 @@ public:
     /// <param name="playerPositionY">- Position of player on board on axle Y.</param>
     /// <param name="playerSprite">- Character that will be used to create player.</param>
     /// <param name="pointSprite">- Character that will be used to create point.</param>
-    Game(unsigned int sizeX = 2, unsigned int sizeY = 2, unsigned int playerPositionX = 0, unsigned int playerPositionY = 0, unsigned int enemiesAmount = 2, bool addFrames = true, bool replaceSpaceByFrame = false, cchar_t spaceChar = ' ',  cchar_t frameChar = '#',  cchar_t playerSprite = L'\u263B', cchar_t pointSprite = '$', cchar_t enemySprite = L'\u2639');
+    Game(unsigned int sizeX = 2, unsigned int sizeY = 2, unsigned int playerPositionX = 0, unsigned int playerPositionY = 0, unsigned int enemiesAmount = 2, bool addFrames = true, bool replaceSpaceByFrame = false, char spaceChar = ' ',  char frameChar = '#',  char playerSprite = L'\u263B', char pointSprite = '$', char enemySprite = L'\u2639');
     
     /// <summary>
     /// Second type of constructor.
@@ -100,7 +100,7 @@ private:
     /// <param name="playerPositionY">- Position of player on board on axle Y.</param>
     /// <param name="playerSprite">- Character that will be used to create player.</param>
     /// <param name="pointSprite">- Character that will be used to create point.</param>
-    void prepareBoard(unsigned int playerPositionX, unsigned int playerPositionY, cchar_t playerSprite, cchar_t pointSprite, cchar_t enemySprite);
+    void prepareBoard(unsigned int playerPositionX, unsigned int playerPositionY, char playerSprite, char pointSprite, char enemySprite);
 
     /// <summary>
     /// Setup positions and characters of player, enemies and point.
@@ -125,7 +125,7 @@ private:
     /// It's getting a character, checking it out and then changing position of player.
     /// </summary>
     /// <param name="character">- Character from keyboard. A - left, W - up, D - right, S - down.</param>
-    bool makeMove(cchar_t character);
+    bool makeMove(char character);
 
     /// <summary>
     /// Set new position of all enemies on board.

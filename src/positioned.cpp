@@ -28,7 +28,7 @@
 #include "positioned.h"
 
 //define constructor
-Positioned::Positioned(unsigned int posX, unsigned int posY, cchar_t sprite)
+Positioned::Positioned(unsigned int posX, unsigned int posY, char sprite)
 	:m_positionX(posX), m_positionY(posY), m_oldPositionX(posX), m_oldPositionY(posY), m_sprite(sprite)
 {
 }
@@ -110,7 +110,7 @@ void Positioned::newSprite(char newSprite)
 }
 
 //define getter
-cchar_t Positioned::getSprite()
+char Positioned::getSprite()
 {
 	return m_sprite;
 }

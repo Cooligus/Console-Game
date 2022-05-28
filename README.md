@@ -8,6 +8,7 @@ It's a really tiny project that is a game you can play in console. If you want t
 
 ## Table of contents
 * [General info](#general-info)
+* [Dependencies](#dependencies)
 * [Building](#building)
 * [Screenshots](#screenshots)
 * [Config](#config)
@@ -15,11 +16,22 @@ It's a really tiny project that is a game you can play in console. If you want t
 * [Contact](#contact)
 
 
-## Building
-To build Console-Game you need to have installed at last [cmake 3.0](https://cmake.org/download/) and use it to build. If you have installed Visual Studio 2019 or different IDE with cmake support simply build Console-Game with that. [See also](https://cmake.org/runningcmake/).
-
 ## General info
 There you moving by a some face character or different, and you have to earn some points by moving on dollar or different character. There actually nothing more.
+
+## Dependencies
+This projects uses ncurses in wide version and nlohmann JSON.
+
+## Building
+To build Console-Game you need to have installed at last [cmake 3.0](https://cmake.org/download/) and use it to build. If you have installed Visual Studio 2019 or any different IDE with cmake support, you shouldn't need any tutorial. [See also](https://cmake.org/runningcmake/).  
+
+This example shows how to do it on linux with make.
+```sh
+git clone https://github.com/cooligus/console-game/
+cd console-game
+cmake -B build/
+make
+```
 
 ## Screenshots
 ![Example screenshot 1](rc/screenshots/First.png)
@@ -30,7 +42,7 @@ There you moving by a some face character or different, and you have to earn som
 ## Config
 If you want to use config you must put it into same folder as Console-Game. There are all variables you can change. You delete them if you want and in this case game will use default content of delete variable. But remember config doesn't support emoji. [See config file.](rc/ConfigCG.json)
 
-```
+```json
 {
   "config": {
     "sizeX": 20,

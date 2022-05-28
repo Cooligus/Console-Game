@@ -50,7 +50,7 @@ Board::Board(unsigned int sizeX, unsigned int sizeY, char spaceChar, bool addFra
 	m_sizeY = sizeY;
 
 	//Preparing to make board
-	m_gamePool = vector<vector<cchar_t>>();
+	m_gamePool = vector<vector<char>>();
 
 	//Declaring lambda that will help loops
 	auto replaceSpace = [addFrames, replaceSpaceByFrame]()
@@ -111,10 +111,10 @@ Board::Board(unsigned int sizeX, unsigned int sizeY, char spaceChar, bool addFra
 	}
 }
 
-vector<vector<cchar_t>> Board::getCharacters(unsigned int xStart, unsigned int yStart, unsigned int xEnd, unsigned int yEnd) const
+vector<vector<char>> Board::getCharacters(unsigned int xStart, unsigned int yStart, unsigned int xEnd, unsigned int yEnd) const
 {
 	//preparing vector
-	vector<vector<cchar_t>> toReturn;
+	vector<vector<char>> toReturn;
 
 	//checking variables
 	specialCheckVariables(xStart, yStart, xEnd, yEnd);
@@ -154,7 +154,7 @@ void Board::changeCharacters(unsigned int xStart, unsigned int yStart, unsigned 
 	}
 }
 
-void Board::changeCharacter(cchar_t replacement, unsigned int positionX, unsigned int positionY)
+void Board::changeCharacter(char replacement, unsigned int positionX, unsigned int positionY)
 {
 	//checking variable x
 	checkVariableX(positionX, false);
@@ -168,7 +168,7 @@ void Board::changeCharacter(cchar_t replacement, unsigned int positionX, unsigne
 void Board::display(unsigned int xStart, unsigned int yStart, unsigned int xEnd, unsigned int yEnd) const
 {
 	//getting characters
-	vector<vector<cchar_t>> v = getCharacters(xStart, yStart, xEnd, yEnd);
+	vector<vector<char>> v = getCharacters(xStart, yStart, xEnd, yEnd);
 
 	//===displaying===
 	
@@ -179,7 +179,7 @@ void Board::display(unsigned int xStart, unsigned int yStart, unsigned int xEnd,
 		for (int j = 0; j < v[i].size(); j++)
 		{
 			//displaying on console
-			add_wch(&v[i][j]);
+			printw(&v[i][j]);
 		}
 		//making new line
 		printw("\n");
