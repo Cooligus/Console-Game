@@ -40,92 +40,37 @@ add_executable (Console-Game
     "${SRC_DIR}/game.cpp"
     "${SRC_DIR}/main.cpp"
     "${SRC_DIR}/positioned.cpp"
-    "${SRC_DIR}/config.cpp"
+    #"${SRC_DIR}/config.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/rc/icon.rc"
-        )
-
-
-# Define list with names of config variables for game
-list(APPEND GAME_NAMES
-    "CONFIG_CG"
-    "SIZE_X"
-    "SIZE_Y"
-    "PLAYER_POSITION_X"
-    "PLAYER_POSITION_Y"
-    "ENEMIES_AMOUNT"
-    "ADD_FRAMES"
-    "REPLACE_SPACE"
-    "SPACE_CHAR"
-    "FRAME_CHAR"
-    "PLAYER_SPRITE"
-    "POINT_SPRITE"
-    "ENEMY_SPRITE"
     )
 
-# Define list with names of variables in config
-list(APPEND CG_NAMES
-    "ConfigCG"
-    "sizeX"
-    "sizeY"
-    "playerPositionX"
-    "playerPositionY"
-    "enemiesAmount"
-    "addFrames"
-    "replaceSpaceByFrame"
-    "spaceChar"
-    "frameChar"
-    "playerSprite"
-    "pointSprite"
-    "enemySprite"
-    )
-
-# Set variables
-set(INCREMENTER 0)
-set(DEF "_DEF")
-add_definitions(-DDEFAULT_PREPOSITION="${DEF}")
-
-# Define foreach
-foreach(VAR_NAME ${GAME_NAMES})
-    
-    # Get current name
-    list(GET CG_NAMES ${INCREMENTER} CG_VAR_NAME)
-    
-    # Define VAR_NAME
-    add_definitions(-D${VAR_NAME}="${CG_VAR_NAME}")
-
-    # Set current variable to parrent scope
-    set(${VAR_NAME} ${CG_VAR_NAME})
-
-    # Increment incrementer
-    math(EXPR INCREMENTER "${INCREMENTER}+1")
-
-endforeach()
-
-# Configure file with default definitions
-configure_file("src/definitions.in.h" "src/definitions.h")
+include(cmake/Config.cmake)
 include_directories(${PROJECT_BINARY_DIR})
 
-find_package(nlohmann_json REQUIRED)
-include_directories(${NLOHMANN_INCLUDE_DIR})
+# Find JSON
+find_package(nlohmann_json)
+
+# Setup and download JSON if not found
+if(nlohmann_json_FOUND EQUAL 1)
+    include_directories(${NLOHMANN_INCLUDE_DIR})
+else()
+    FILE(DOWNLOAD 
+        "https://raw.githubusercontent.com/nlohmann/json/release/3.10.5/single_include/nlohmann/json.hpp"
+        "${CMAKE_BINARY_DIR}/src/nlohmann/json.h"
+    )
+    set(NLOHMANN_LIBRARIES "${CMAKE_BINARY_DIR}/src/nlohmann/json.h")
+endif()
+
 target_link_libraries(Console-Game ${NLOHMANN_LIBRARIES})
 
-# Set up pdcurses if it's windows
-if(WIN32 OR MSVC)
+# Set ncurses (MinGW is needed if you want to compile it on Windows)
+set(CURSES_NEED_NCURSES TRUE)
+set(CURSES_NEED_WIDE TRUE)
 
-    # Add special definition to have wide characters
-    add_definitions(-DPDC_WIDE)
-    
-else()
-
-    set(CURSES_NEED_NCURSES TRUE)
-    set(CURSES_NEED_WIDE TRUE)
-
-    #Find and include curses
-    find_package(Curses REQUIRED)
-    include_directories(${CURSES_INCLUDE_DIR})
-    target_link_libraries(Console-Game ${CURSES_LIBRARIES})
-
-endif()
+#Find and include curses
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
+target_link_libraries(Console-Game ${CURSES_LIBRARIES})
 
 # Install project stuffs
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

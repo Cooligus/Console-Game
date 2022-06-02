@@ -9,8 +9,8 @@
     "replaceSpaceByFrame": false,
     "spaceChar": " ",
     "frameChar": "#",
-    "playerSprite": "☻",
-    "enemySprite": "☺",
+    "playerSprite": "\u263A",
+    "enemySprite": "\u263B",
     "pointSprite": "$"
   }
 }

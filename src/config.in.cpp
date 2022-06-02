@@ -41,7 +41,7 @@ nlohmann::json getConfigFromJSON(std::string path)
 	nlohmann::json toReturn;
 
 	//new in-file stream
-	std::ifstream file(path + CONFIG_CG_DEF, std::ifstream::in);
+	std::ifstream file(path + " "/*CONFIG_CG_DEF*/, std::ifstream::in);
 
 	//check is file good and if not close it
 	if (!file.good())
