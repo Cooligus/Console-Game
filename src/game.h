@@ -229,5 +229,8 @@ private:
     /// </summary>
     Board m_board;
 
-std::ofstream m_file;
+    /// <summary>
+    /// Config file
+    /// </summary>
+    std::ofstream m_file;
 };

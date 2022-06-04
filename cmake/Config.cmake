@@ -26,6 +26,28 @@
 ###########################################################
 
 # Define list with names of variables in config
+set(types "types")
+set(variables "variables")
+set(definitions "definitions")
+
+set(boolean "bool")
+set(int "int")
+set(str "string")
+
+list(APPEND CONF_TYPES
+    ${str}
+    ${int}
+    ${int}
+    ${int}
+    ${boolean}
+    ${boolean}
+    ${str}
+    ${str}
+    ${str}
+    ${str}
+    ${str}
+    )
+
 list(APPEND CONF_NAMES
     "ConfigCG"
     "sizeX"
@@ -49,21 +71,36 @@ list(APPEND CONF_DEFS
     "false"
     " "
     "#"
-    "\u263A"
+    "O"
     "$"
-    "\u263B"
+    "D"
     )
 
 # Set variables
 set(INCREMENTER 0)
-set(CONFIGURE_LIST "")
+set(CONFIGURE_LIST "" )
 
 # Define foreach
-foreach(VAR_NAME ${GAME_NAMES})
+foreach(VAR_NAME ${CONF_NAMES})
 
     # Get current name
-    list(GET CG_NAMES ${INCREMENTER} CG_VAR_NAME)
-    
+    list(GET CONF_TYPES ${INCREMENTER} CONF_TYPE)
+    list(GET CONF_DEFS ${INCREMENTER} CONF_DEF)
+
+    set(CONFIGURE_STEP "${types}.push_back(\"${CONF_TYPE}\");")
+    list(APPEND CONFIGURE_LIST ${CONFIGURE_STEP})
+
+    set(CONFIGURE_STEP "${variables}.push_back(\"${VAR_NAME}\");")
+    list(APPEND CONFIGURE_LIST ${CONFIGURE_STEP})
+
+    # Fix broken strings
+    if(${CONF_TYPE} EQUAL ${str})
+        set(CONF_DEF "\"${CONF_DEF}\"" PARENT_SCOPE)
+    endif()
+
+    set(CONFIGURE_STEP "${definitions}.push_back(${CONF_DEF});")
+    list(APPEND CONFIGURE_LIST ${CONFIGURE_STEP})
+
     # Increment incrementer
     math(EXPR INCREMENTER "${INCREMENTER}+1")
 
@@ -71,4 +108,5 @@ endforeach()
 
 # Configure files
 configure_file("${CMAKE_SOURCE_DIR}/rc/ConfigCG.in.json" "${CMAKE_BINARY_DIR}/rc/ConfigCG.json")
-configure_file("${CMAKE_SOURCE_DIR}/src/definitions.in.h" "${CMAKE_BINARY_DIR}/src/definitions.h")
+configure_file("${CMAKE_SOURCE_DIR}/src/config.in.cpp" "${CMAKE_BINARY_DIR}/src/config.cpp")
+configure_file("${CMAKE_SOURCE_DIR}/src/game.in.cpp" "${CMAKE_BINARY_DIR}/src/game.cpp")

@@ -37,7 +37,7 @@ set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 add_executable (Console-Game
     "${SRC_DIR}/board.cpp"
     "${SRC_DIR}/direction.cpp"
-    "${SRC_DIR}/game.cpp"
+    #"${SRC_DIR}/game.cpp"
     "${SRC_DIR}/main.cpp"
     "${SRC_DIR}/positioned.cpp"
     #"${SRC_DIR}/config.cpp"

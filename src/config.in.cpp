@@ -31,9 +31,6 @@
 #include <iostream>
 #include <locale>
 
-#define EXPAND(x) x
-#define GET_DEF(n) EXPAND(n ## _DEF)
-
 //define function
 nlohmann::json getConfigFromJSON(std::string path)
 {
@@ -49,15 +46,12 @@ nlohmann::json getConfigFromJSON(std::string path)
 		//close stream
 		file.close();
 	}
-	//else read json and put config into config (sense)
+	//read json and put config into config (sense)
 	else
 	{
 		//parse json file
 		nlohmann::json fileContent = nlohmann::json::parse(file);
-
-
 		nlohmann::json configContent = fileContent["config"];
-
         toReturn = setupConfig(configContent);
 	}
 
@@ -65,28 +59,24 @@ nlohmann::json getConfigFromJSON(std::string path)
 }
 
 //define config setup
-nlohmann::json setupConfig(nlohmann::json variable)
+nlohmann::json setupConfig(nlohmann::json originalConfig)
 {
 	//define 
-	nlohmann::json config;
+	nlohmann::json newConfig;
+	std::vector<std::string> @types@;
+	std::vector<std::string> @variables@;
+	std::vector<std::string> @definitions@;
+	@CONFIGURE_LIST@
 
-	//set integers
-    setupJSONVariable<VarType::UNSIGNED>(variable, config, SIZE_X);
-	setupJSONVariable<VarType::UNSIGNED>(variable, config, SIZE_Y);
-	setupJSONVariable<VarType::UNSIGNED>(variable, config, PLAYER_POSITION_X);
-	setupJSONVariable<VarType::UNSIGNED>(variable, config, PLAYER_POSITION_Y);
-	setupJSONVariable<VarType::UNSIGNED>(variable, config, ENEMIES_AMOUNT);
-
-    //set booleans
-	setupJSONVariable<VarType::BOOL>(variable, config, ADD_FRAMES);
-	setupJSONVariable<VarType::BOOL>(variable, config, REPLACE_SPACE);
-
-	//set characters
-	setupJSONVariable<VarType::STRING>(variable, config, SPACE_CHAR);
-	setupJSONVariable<VarType::STRING>(variable, config, FRAME_CHAR);
-	setupJSONVariable<VarType::STRING>(variable, config, PLAYER_SPRITE);
-	setupJSONVariable<VarType::STRING>(variable, config, POINT_SPRITE);
-	setupJSONVariable<VarType::STRING>(variable, config, ENEMY_SPRITE);
+	for(int i = 0; i < @originalConfigs@.size(); i++)
+	{
+		if(@types@[i%@types@.size()] == "@str@");
+			setupJSONoriginalConfig<VarType::STRING>(originalConfig, newConfig, @variables@[i%@variables@.size()], @definitions@[i%@definitions@.size()])
+		if(@types@[i%@types@.size()] == "@boolean@");
+			setupJSONoriginalConfig<VarType::BOOL>(originalConfig, newConfig, @variables@[i%@variables@.size()], @definitions@[i%@definitions@.size()])
+		if(@types@[i%@types@.size()] == "@int@");
+			setupJSONoriginalConfig<VarType::UNSIGNED>(originalConfig, newConfig, @variables@[i%@variables@.size()], @definitions@[i%@definitions@.size()])
+	}
 
 	return config;
 }
@@ -102,7 +92,7 @@ char getchar(nlohmann::json jsonVar)
 	//define output
 	char output = ' ';
 	
-	//push to jsonOutput content of json variable
+	//push to jsonOutput content of json originalConfig
 	//std::string jsonOutput = jsonVar.get<json::string_t>();
 
 	// define converter
@@ -111,7 +101,7 @@ char getchar(nlohmann::json jsonVar)
 	// convert json content from utf-8 tp utf-16
 	//std::u16string u16 = convert.from_bytes(jsonOutput.c_str());
 
-	//push to char first utf-16 character from json variable
+	//push to char first utf-16 character from json originalConfig
 	//output = u16[0];
 
 	//return char
@@ -120,9 +110,9 @@ char getchar(nlohmann::json jsonVar)
 
 //define unsigned int typed checker
 template<>
-bool checkJSON<VarType::UNSIGNED>(nlohmann::json variable, const char *varName)
+bool checkJSON<VarType::UNSIGNED>(nlohmann::json originalConfig, const char *varName)
 {
-	if (!variable[varName].empty() && variable[varName].type() == nlohmann::json::value_t::number_unsigned)
+	if (!originalConfig[varName].empty() && originalConfig[varName].type() == nlohmann::json::value_t::number_unsigned)
         return true;
 	else
 		return false;
@@ -130,9 +120,9 @@ bool checkJSON<VarType::UNSIGNED>(nlohmann::json variable, const char *varName)
 
 //define bool typed checker
 template<>
-bool checkJSON<VarType::BOOL>(nlohmann::json variable, const char *varName)
+bool checkJSON<VarType::BOOL>(nlohmann::json originalConfig, const char *varName)
 {
-	if (!variable[varName].empty() && variable[varName].type() == nlohmann::json::value_t::boolean)
+	if (!originalConfig[varName].empty() && originalConfig[varName].type() == nlohmann::json::value_t::boolean)
 		return true;
 	else
 		return false;
@@ -140,9 +130,9 @@ bool checkJSON<VarType::BOOL>(nlohmann::json variable, const char *varName)
 
 //define string typed checker
 template<>
-bool checkJSON<VarType::STRING>(nlohmann::json variable, const char *varName)
+bool checkJSON<VarType::STRING>(nlohmann::json originalConfig, const char *varName)
 {
-	if (!variable[varName].empty() && variable[varName].type() == nlohmann::json::value_t::string)
+	if (!originalConfig[varName].empty() && originalConfig[varName].type() == nlohmann::json::value_t::string)
 		return true;
 	else
 		return false;
@@ -150,32 +140,30 @@ bool checkJSON<VarType::STRING>(nlohmann::json variable, const char *varName)
 
 //define unsigned int typed setup
 template<>
-void setupJSONVariable<VarType::UNSIGNED>(nlohmann::json variable, nlohmann::json &config, const char *varName)
+void setupJSONoriginalConfig<VarType::UNSIGNED>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, unsigned int defaultValue)
 {
-	if (checkJSON<VarType::UNSIGNED>(variable, varName))
-        config[varName] = variable[varName];
+	if (checkJSON<VarType::UNSIGNED>(originalConfig, varName))
+        config[varName] = originalConfig[varName];
 	else
-        config[varName] = std::string(varName).append(DEFAULT_PREPOSITION);
+        config[varName] = defaultValue;
 }
 
 //define boolean typed setup
 template<>
-void setupJSONVariable<VarType::BOOL>(nlohmann::json variable, nlohmann::json &config, const char *varName)
+void setupJSONoriginalConfig<VarType::BOOL>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, bool defaultValue)
 {
-	if (checkJSON<VarType::BOOL>(variable, varName))
-		config[varName] = variable[varName];
+	if (checkJSON<VarType::BOOL>(originalConfig, varName))
+		config[varName] = originalConfig[varName];
 	else
-		config[varName] = GET_DEF(varName);
+		config[varName] = defaultValue;
 }
 
 //define string typed setup
 template<>
-void setupJSONVariable<VarType::STRING>(nlohmann::json variable, nlohmann::json &config, const char *varName)
+void setupJSONoriginalConfig<VarType::STRING>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char *defaultValue)
 {
-	if (checkJSON<VarType::STRING>(variable, varName))
-		config[varName] = variable[varName];
+	if (checkJSON<VarType::STRING>(originalConfig, varName))
+		config[varName] = originalConfig[varName];
 	else
-		config[varName] = GET_DEF(varName);
+		config[varName] = defaultValue;
 }
-
-
