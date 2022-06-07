@@ -59,7 +59,7 @@ if(nlohmann_json_FOUND EQUAL 1)
 else()
     FILE(DOWNLOAD 
         "https://raw.githubusercontent.com/nlohmann/json/release/3.10.5/single_include/nlohmann/json.hpp"
-        "${CMAKE_BINARY_DIR}/src/nlohmann/json.h"
+        "${CMAKE_BINARY_DIR}/src/nlohmann/json.hpp"
     )
     add_library(nlohmann_json INTERFACE)
     target_include_directories(Console-Game INTERFACE "${BIN_DIR}")
