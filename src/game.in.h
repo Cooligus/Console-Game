@@ -52,7 +52,7 @@ public:
     /// <param name="playerPositionY">- Position of player on board on axle Y.</param>
     /// <param name="playerSprite">- Character that will be used to create player.</param>
     /// <param name="pointSprite">- Character that will be used to create point.</param>
-    Game(unsigned int sizeX = 2, unsigned int sizeY = 2, unsigned int playerPositionX = 0, unsigned int playerPositionY = 0, unsigned int enemiesAmount = 2, bool addFrames = true, bool replaceSpaceByFrame = false, char spaceChar = ' ',  char frameChar = '#',  char playerSprite = L'\u263B', char pointSprite = '$', char enemySprite = L'\u2639');
+    Game(unsigned int sizeX = @sizeX_DEF@, unsigned int sizeY = @sizeY_DEF@, unsigned int playerPositionX = 0, unsigned int playerPositionY = 0, unsigned int enemiesAmount = @enemiesAmount_DEF@, bool addFrames = @addFrames_DEF@, bool replaceSpaceByFrame = @replaceSpaceByFrame_DEF@, char spaceChar = '@spaceChar_DEF@',  char frameChar = '@frameChar_DEF@',  char playerSprite = '@playerSprite_DEF@', char pointSprite = '@pointSprite_DEF@', char enemySprite = '@enemySprite_DEF@');
     
     /// <summary>
     /// Second type of constructor.

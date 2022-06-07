@@ -106,13 +106,12 @@ bool checkJSON<VarType::STRING>(nlohmann::json variable, const char *varName);
 
 
 /// <summary>
-/// Setup JSON config from JSON variable.
+/// Check does JSON variable is properly set.
 /// </summary>
 /// <param name="variable">- JSON variable with stuff that function will put into config.</param>
-/// <param name="config">- JSON variable with future config.</param>
 /// <param name="varName">- name of variable.</param>
 template<VarType>
-void setupJSONVariable(nlohmann::json variable, nlohmann::json &config, const char *varName);
+void setupJSONVariable(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char* defaultValue);
 
 /// <summary>
 /// Setup JSON config from JSON variable.
@@ -121,7 +120,7 @@ void setupJSONVariable(nlohmann::json variable, nlohmann::json &config, const ch
 /// <param name="config">- JSON variable with future config.</param>
 /// <param name="varName">- name of variable.</param>
 template<>
-void setupJSONVariable<VarType::UNSIGNED>(nlohmann::json variable, nlohmann::json &config, const char *varName, unsigned int defaultValue);
+void setupJSONVariable<VarType::UNSIGNED>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char* defaultValue);
 
 /// <summary>
 /// Setup JSON config from JSON variable.
@@ -130,7 +129,7 @@ void setupJSONVariable<VarType::UNSIGNED>(nlohmann::json variable, nlohmann::jso
 /// <param name="config">- JSON variable with future config.</param>
 /// <param name="varName">- name of variable.</param>
 template<>
-void setupJSONVariable<VarType::BOOL>(nlohmann::json variable, nlohmann::json &config, const char *varName, bool defaultValue);
+void setupJSONVariable<VarType::BOOL>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char* defaultValue);
 
 /// <summary>
 /// Setup JSON config from JSON variable.
@@ -139,4 +138,4 @@ void setupJSONVariable<VarType::BOOL>(nlohmann::json variable, nlohmann::json &c
 /// <param name="config">- JSON variable with future config.</param>
 /// <param name="varName">- name of variable.</param>
 template<>
-void setupJSONVariable<VarType::STRING>(nlohmann::json variable, nlohmann::json &config, const char *varName, const char *defaultValue);
+void setupJSONVariable<VarType::STRING>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char* defaultValue);

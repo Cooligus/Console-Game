@@ -25,7 +25,6 @@
 /// For more information, please refer to < http://unlicense.org/ >
 ///////////////////////////////////////////////////////////
 
-#include "src/definitions.h"
 #include "config.h"
 #include <fstream>
 #include <iostream>
@@ -38,7 +37,7 @@ nlohmann::json getConfigFromJSON(std::string path)
 	nlohmann::json toReturn;
 
 	//new in-file stream
-	std::ifstream file(path + " "/*CONFIG_CG_DEF*/, std::ifstream::in);
+	std::ifstream file(path + "@ConfigCG@", std::ifstream::in);
 
 	//check is file good and if not close it
 	if (!file.good())
@@ -68,17 +67,17 @@ nlohmann::json setupConfig(nlohmann::json originalConfig)
 	std::vector<std::string> @definitions@;
 	@CONFIGURE_LIST@
 
-	for(int i = 0; i < @originalConfigs@.size(); i++)
+	for(int i = 0; i < @variables@.size(); i++)
 	{
-		if(@types@[i%@types@.size()] == "@str@");
-			setupJSONoriginalConfig<VarType::STRING>(originalConfig, newConfig, @variables@[i%@variables@.size()], @definitions@[i%@definitions@.size()])
-		if(@types@[i%@types@.size()] == "@boolean@");
-			setupJSONoriginalConfig<VarType::BOOL>(originalConfig, newConfig, @variables@[i%@variables@.size()], @definitions@[i%@definitions@.size()])
-		if(@types@[i%@types@.size()] == "@int@");
-			setupJSONoriginalConfig<VarType::UNSIGNED>(originalConfig, newConfig, @variables@[i%@variables@.size()], @definitions@[i%@definitions@.size()])
+		if(@types@[i] == "@str@")
+			setupJSONVariable<VarType::STRING>(originalConfig, newConfig, @variables@[i].c_str(), @definitions@[i].c_str());
+		if(@types@[i] == "@boolean@")
+			setupJSONVariable<VarType::BOOL>(originalConfig, newConfig, @variables@[i].c_str(), @definitions@[i].c_str());
+		if(@types@[i] == "@int@")
+			setupJSONVariable<VarType::UNSIGNED>(originalConfig, newConfig, @variables@[i].c_str(), @definitions@[i].c_str());
 	}
 
-	return config;
+	return newConfig;
 }
 
 nlohmann::json checkConfig(nlohmann::json config)
@@ -91,19 +90,20 @@ char getchar(nlohmann::json jsonVar)
 {
 	//define output
 	char output = ' ';
-	
+/*	
 	//push to jsonOutput content of json originalConfig
-	//std::string jsonOutput = jsonVar.get<json::string_t>();
+	std::string jsonOutput = jsonVar.get<json::string_t>();
 
 	// define converter
-	//std::wstring_convert<std::codecvt<char16_t, char, std::mbstate_t>, char16_t> convert;
+	std::wstring_convert<std::codecvt<char16_t, char, std::mbstate_t>, char16_t> convert;
 
 	// convert json content from utf-8 tp utf-16
-	//std::u16string u16 = convert.from_bytes(jsonOutput.c_str());
+	std::u16string u16 = convert.from_bytes(jsonOutput.c_str());
 
 	//push to char first utf-16 character from json originalConfig
-	//output = u16[0];
-
+	output = u16[0];
+*/
+ 
 	//return char
 	return output;
 }
@@ -140,7 +140,7 @@ bool checkJSON<VarType::STRING>(nlohmann::json originalConfig, const char *varNa
 
 //define unsigned int typed setup
 template<>
-void setupJSONoriginalConfig<VarType::UNSIGNED>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, unsigned int defaultValue)
+void setupJSONVariable<VarType::UNSIGNED>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char* defaultValue)
 {
 	if (checkJSON<VarType::UNSIGNED>(originalConfig, varName))
         config[varName] = originalConfig[varName];
@@ -150,7 +150,7 @@ void setupJSONoriginalConfig<VarType::UNSIGNED>(nlohmann::json originalConfig, n
 
 //define boolean typed setup
 template<>
-void setupJSONoriginalConfig<VarType::BOOL>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, bool defaultValue)
+void setupJSONVariable<VarType::BOOL>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char* defaultValue)
 {
 	if (checkJSON<VarType::BOOL>(originalConfig, varName))
 		config[varName] = originalConfig[varName];
@@ -160,7 +160,7 @@ void setupJSONoriginalConfig<VarType::BOOL>(nlohmann::json originalConfig, nlohm
 
 //define string typed setup
 template<>
-void setupJSONoriginalConfig<VarType::STRING>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char *defaultValue)
+void setupJSONVariable<VarType::STRING>(nlohmann::json originalConfig, nlohmann::json &config, const char *varName, const char* defaultValue)
 {
 	if (checkJSON<VarType::STRING>(originalConfig, varName))
 		config[varName] = originalConfig[varName];

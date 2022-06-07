@@ -45,7 +45,7 @@ Direction reverseDirection(Direction toReverse)
 		return Direction::LEFT;
 
 	//checking does toReverse equal DOWN
-	else if (toReverse == Direction::DOWN)
+	else
 		//returning UP
 		return Direction::UP;
 }

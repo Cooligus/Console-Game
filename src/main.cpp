@@ -34,14 +34,8 @@ int main()
 {
 	setlocale(LC_ALL, "");
 
-    std::ofstream file;
-    file.open("output.txt", std::fstream::out);
-    file << "hello";
-
 	//set locale to all
 	std::locale::global(std::locale(""));
-
-    file << "i am before game";
 
 	//check if curses initscr return true else end program
 	if (!initscr())
@@ -56,15 +50,11 @@ int main()
 	//show everything first time
 	game.show();
 
-    file << "lol";
-
 	//do until end
 	while (1)
 	{
 		//generate next frame
 		game.newFrame();
-
-        file << "next loop";
 
 		//end loop if game is ended
 		if(game.isEnded())
@@ -73,8 +63,6 @@ int main()
 		//refresh window
 		refresh();
 	}
-
-    file.close();
 
 	//end work of curses
 	endwin();

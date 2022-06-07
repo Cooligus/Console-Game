@@ -1,16 +1,14 @@
 ﻿{
   "config": {
-    "sizeX": 20,
-    "sizeY": 10,
-    "playerPositionX": 2,
-    "playerPositionY": 2,
-    "enemiesAmount": 3,
-    "addFrames": true,
-    "replaceSpaceByFrame": false,
-    "spaceChar": " ",
-    "frameChar": "#",
-    "playerSprite": "\u263A",
-    "enemySprite": "\u263B",
-    "pointSprite": "$"
+    "@sizeX@": @sizeX_DEF@,
+    "@sizeY@": @sizeY_DEF@,
+    "@enemiesAmount@": @enemiesAmount_DEF@,
+    "@addFrames@": @addFrames_DEF@,
+    "@replaceSpaceByFrame@": @replaceSpaceByFrame_DEF@,
+    "@spaceChar@": "@spaceChar_DEF@",
+    "@frameChar@": "@frameChar_DEF@",
+    "@playerSprite@": "@playerSprite_DEF@",
+    "@enemySprite@": "@enemySprite_DEF@",
+    "@pointSprite@": "@pointSprite_DEF@" 
   }
 }

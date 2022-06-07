@@ -79,27 +79,29 @@ list(APPEND CONF_DEFS
 # Set variables
 set(INCREMENTER 0)
 set(CONFIGURE_LIST "" )
+set(DEF_PREFIX "_DEF")
 
 # Define foreach
 foreach(VAR_NAME ${CONF_NAMES})
 
-    # Get current name
+    # Get content from other lists 
     list(GET CONF_TYPES ${INCREMENTER} CONF_TYPE)
     list(GET CONF_DEFS ${INCREMENTER} CONF_DEF)
 
-    set(CONFIGURE_STEP "${types}.push_back(\"${CONF_TYPE}\");")
+    # Setup type
+    set(CONFIGURE_STEP "${types}.push_back(\"${CONF_TYPE}\");\n")
     list(APPEND CONFIGURE_LIST ${CONFIGURE_STEP})
 
-    set(CONFIGURE_STEP "${variables}.push_back(\"${VAR_NAME}\");")
+    # Setup name
+    set(CONFIGURE_STEP "${variables}.push_back(\"${VAR_NAME}\");\n")
     list(APPEND CONFIGURE_LIST ${CONFIGURE_STEP})
 
-    # Fix broken strings
-    if(${CONF_TYPE} EQUAL ${str})
-        set(CONF_DEF "\"${CONF_DEF}\"" PARENT_SCOPE)
-    endif()
-
-    set(CONFIGURE_STEP "${definitions}.push_back(${CONF_DEF});")
+    # Setup default value
+    set(CONFIGURE_STEP "${definitions}.push_back(\"${CONF_DEF}\");\n")
     list(APPEND CONFIGURE_LIST ${CONFIGURE_STEP})
+
+    set(${VAR_NAME} ${VAR_NAME})
+    set(${VAR_NAME}${DEF_PREFIX} ${CONF_DEF})
 
     # Increment incrementer
     math(EXPR INCREMENTER "${INCREMENTER}+1")
@@ -110,3 +112,4 @@ endforeach()
 configure_file("${CMAKE_SOURCE_DIR}/rc/ConfigCG.in.json" "${CMAKE_BINARY_DIR}/rc/ConfigCG.json")
 configure_file("${CMAKE_SOURCE_DIR}/src/config.in.cpp" "${CMAKE_BINARY_DIR}/src/config.cpp")
 configure_file("${CMAKE_SOURCE_DIR}/src/game.in.cpp" "${CMAKE_BINARY_DIR}/src/game.cpp")
+configure_file("${CMAKE_SOURCE_DIR}/src/game.in.h" "${CMAKE_BINARY_DIR}/src/game.h")

@@ -2,7 +2,7 @@
 It's a really tiny project that is a game you can play in console. If you want to change settings without changing code, use [ConfigCG.json](rc/ConfigCG.json) file.
 
 ### Version
-1.5.1
+1.5.2
 
 ## Table of contents
 * [General info](#general-info)
@@ -18,12 +18,14 @@ It's a really tiny project that is a game you can play in console. If you want t
 There you moving by a some face character or different, and you have to earn some points by moving on dollar or different character. There actually nothing more.
 
 ## Dependencies
-This projects uses ncurses in wide version and nlohmann JSON.
+This projects uses ncurses in wide version and [nlohmann JSON](https://github.com/nlohmann/json).
 
 ## Building
-To build Console-Game you need to have installed at last [cmake 3.0](https://cmake.org/download/) and use it to build. If you have installed Visual Studio 2019 or any different IDE with cmake support, you shouldn't need any tutorial. [See also](https://cmake.org/runningcmake/).  
+To build Console-Game you need to have installed at last [cmake 3.0](https://cmake.org/download/) and use it to build.  
+**TO COMPILE IT ON WINDOWS YOU NEED MINGW COMPILER**.
 
 This example shows how to do it on linux with make.
+
 ```sh
 git clone https://github.com/cooligus/console-game/
 cd console-game
@@ -45,8 +47,6 @@ If you want to use config you must put it into same folder as Console-Game. Ther
   "config": {
     "sizeX": 20,
     "sizeY": 10,
-    "playerPositionX": 2,
-    "playerPositionY": 2,
     "enemiesAmount": 3,
     "addFrames": true,
     "replaceSpaceByFrame": false,
@@ -58,8 +58,3 @@ If you want to use config you must put it into same folder as Console-Game. Ther
   }
 }
 ```
-
-## Libraries 
-Project is created with:
-* [PDCurses-3.9](https://github.com/wmcbrine/PDCurses)
-* [JSON reader](https://github.com/nlohmann/json)

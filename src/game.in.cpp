@@ -29,18 +29,30 @@
 #include <cctype>
 
 Game::Game(unsigned int sizeX, unsigned int sizeY, unsigned int playerPositionX, unsigned int playerPositionY, unsigned int enemiesAmount, bool addFrames, bool replaceSpaceByFrame, char spaceChar, char frameChar, char playerSprite, char pointSprite, char enemySprite)
-    :m_board(sizeX, sizeY, spaceChar, addFrames, replaceSpaceByFrame, frameChar), m_points(0), m_enemiesAmount(enemiesAmount), m_started(false), m_ended(false), m_playerKilled(false), m_startPlayerPosX(playerPositionX), m_startPlayerPosY(playerPositionY)
+    :m_board(sizeX, sizeY, spaceChar, addFrames, replaceSpaceByFrame, frameChar),
+     m_points(0),
+     m_enemiesAmount(enemiesAmount),
+     m_started(false), 
+     m_ended(false),
+     m_playerKilled(false),
+     m_startPlayerPosX(playerPositionX),
+     m_startPlayerPosY(playerPositionY)
 {    
     //prepare board
     prepareBoard(playerPositionX, playerPositionY, playerSprite, pointSprite, enemySprite);
 }
 
 Game::Game(nlohmann::json configuration)
-    :m_board(configuration[SIZE_X].get<unsigned int>(),configuration[SIZE_Y].get<unsigned int>(),getchar(configuration[SPACE_CHAR].get<nlohmann::json::string_t>()), configuration[ADD_FRAMES].get<bool>(), configuration[REPLACE_SPACE].get<bool>(), getchar(configuration[FRAME_CHAR]))
+    :m_board(configuration["@sizeX@"].get<unsigned int>(),
+     configuration["@sizeY@"].get<unsigned int>(),
+     getchar(configuration["@spaceChar@"].get<nlohmann::json::string_t>()),
+     configuration["@addFrames@"].get<bool>(),
+     configuration["@replaceSpaceByFrame@"].get<bool>(),
+     getchar(configuration["@frameChar@"]))
 {
     //prepare board
-    prepareBoard(configuration[PLAYER_POSITION_X].get<unsigned int>(), configuration[PLAYER_POSITION_Y].get<unsigned int>(),
-                 getchar(configuration[PLAYER_SPRITE]), getchar(configuration[POINT_SPRITE]), getchar(configuration[ENEMY_SPRITE]));
+    prepareBoard(0, 0,
+                 getchar(configuration["@playerSprite@"]), getchar(configuration["@pointSprite@"]), getchar(configuration["@enemySprite@"]));
 
     m_file.open("output.txt", std::fstream::out);
     m_file << "lol";
@@ -127,6 +139,7 @@ bool Game::makeMove(char character)
 
         return toReturn;
     }
+    return true;
  }
 
 void Game::show(bool cleanBoard, bool showPoints, bool showPosition)
