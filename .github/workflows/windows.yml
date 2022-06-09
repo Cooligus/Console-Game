@@ -1,4 +1,3 @@
-        
 name: CMake
 
 on:
@@ -8,14 +7,13 @@ on:
     branches: [ master ]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
 
 jobs:
   build:
     runs-on: windows-latest
 
-steps:
+    steps:
     - uses: actions/checkout@v3
       
     - name: Set up MinGW
