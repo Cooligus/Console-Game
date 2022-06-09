@@ -73,10 +73,14 @@ endif()
 set(CURSES_NEED_NCURSES TRUE)
 set(CURSES_NEED_WIDE TRUE)
 
+option(MINGW_NCURSES_PATH "Path to ncurses if it is compiled via MinGW")
+
 #Find and include curses (MinGW is needed if you want to compile it on Windows)
 if(NOT WIN32)
-find_package(Curses REQUIRED)
-target_link_libraries(Console-Game PRIVATE ${CURSES_LIBRARIES})
+    find_package(Curses REQUIRED)
+    target_link_libraries(Console-Game PRIVATE ${CURSES_LIBRARIES})
+else()
+    target_include_directories(Console-Game PRIVATE "${MINGW_NCURSES_PATH}")
 endif()
 
 # Install project stuffs
