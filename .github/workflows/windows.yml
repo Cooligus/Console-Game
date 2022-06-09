@@ -25,9 +25,8 @@ jobs:
     - name: Install ncurses
       uses: lukka/run-vcpkg@v10
       with:
-        vcpkgArguments: 'ncurses'
+        runVcpkgInstall: 'ncurses'
         vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-        additionalCachedPaths: ${{github.workspace}}/build
 
     - name: Configure CMake
       uses: lukka/run-cmake@v3.0
