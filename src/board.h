@@ -53,7 +53,7 @@ public:
     /// <param name="xEnd">- That informs function where end getting characters from axle x. If it's 0, function will return all characters from axle or if it's more than width of board it will be changed to weight of board.</param>
     /// <param name="yEnd">- That informs function where end getting characters from axle y. If it's 0, function will return all characters from axle or if it's more than width of board it will be changed to height of board.</param>
     /// <returns>Array of characters that creates board.</returns>
-    vector<vector<char>> getCharacters(unsigned int xStart = 0, unsigned int yStart = 0, unsigned int xEnd = 0, unsigned int yEnd = 0) const;
+    vector< vector<char> > getCharacters(unsigned int xStart = 0, unsigned int yStart = 0, unsigned int xEnd = 0, unsigned int yEnd = 0) const;
     
     /// <summary>
     /// You can replace some characters by that character that you like to.
@@ -193,5 +193,5 @@ private:
     /// <summary>
     /// Array that contains character which create the board.
     /// </summary>
-    mutable vector<vector<char>> m_gamePool;
+    mutable vector< vector<char> > m_gamePool;
 };

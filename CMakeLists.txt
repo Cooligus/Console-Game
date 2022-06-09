@@ -43,6 +43,8 @@ add_executable (Console-Game
     "${CMAKE_CURRENT_SOURCE_DIR}/rc/icon.rc"
     )
 
+set_property(TARGET Console-Game PROPERTY CXX_STANDARD 11)
+
 include(cmake/Config.cmake)
 target_include_directories(Console-Game PRIVATE "${BIN_DIR}")
 target_include_directories(Console-Game PRIVATE "${SRC_DIR}")
