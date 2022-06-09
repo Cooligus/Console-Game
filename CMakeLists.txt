@@ -80,7 +80,9 @@ if(NOT WIN32)
     find_package(Curses REQUIRED)
     target_link_libraries(Console-Game PRIVATE ${CURSES_LIBRARIES})
 else()
-    target_include_directories(Console-Game PRIVATE "${MINGW_NCURSES_PATH}")
+    add_library(NCurses INTERFACE)
+    target_include_directories(Console-Game INTERFACE "${MINGW_NCURSES_PATH}")
+    target_link_libraries(Console-Game PRIVATE NCurses)
 endif()
 
 # Install project stuffs
