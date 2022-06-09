@@ -1,4 +1,4 @@
-name: CMake
+name: CMake on Windows
 
 on:
   push:
@@ -20,10 +20,10 @@ jobs:
       uses: egor-tensin/setup-mingw@v2
         
     - name: Configure CMake
-      run: cmake -D CMAKE_PREFIX_PATH=/mingw64/include/ncurses -S . -B ${{github.workspace}}/build -G "MinGW Makefiles" DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DJSON_BuildTests=On
+      run: cmake -S . -B ${{github.workspace}}/build -G "MinGW Makefiles" DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DJSON_BuildTests=On
         
     - name: Build
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} -D CMAKE_PREFIX_PATH=/mingw64/include/ncurses
         
     - name: Test
       working-directory: ${{github.workspace}}/build
