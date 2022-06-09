@@ -1,5 +1,5 @@
 # Console-Game 
-It's a really tiny project that is a game you can play in console. If you want to change settings without changing code, use [ConfigCG.json](rc/ConfigCG.json) file.
+It's a really tiny project that is a game you can play in console. If you want to change settings without changing code, use [ConfigCG.json](rc/ConfigCG.in.json) file.
 
 ### Version
 1.5.2
@@ -10,8 +10,6 @@ It's a really tiny project that is a game you can play in console. If you want t
 * [Building](#building)
 * [Screenshots](#screenshots)
 * [Config](#config)
-* [Libraries](#libraries)
-* [Contact](#contact)
 
 
 ## General info
@@ -40,7 +38,7 @@ make
 ![Example screenshot 4](rc/screenshots/Fourth.png)
 
 ## Config
-If you want to use config you must put it into same folder as Console-Game. There are all variables you can change. You delete them if you want and in this case game will use default content of delete variable. But remember config doesn't support emoji. [See config file.](rc/ConfigCG.json)
+If you want to use config you must put it into same folder as Console-Game. There are all variables you can change. You delete them if you want and in this case game will use default content of delete variable. But remember config doesn't support emoji. [See config file.](rc/ConfigCG.in.json)
 
 ```json
 {
