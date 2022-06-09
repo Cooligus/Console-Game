@@ -48,7 +48,7 @@ Board::Board(unsigned int sizeX, unsigned int sizeY, char spaceChar, bool addFra
 	m_sizeY = sizeY;
 
 	//Preparing to make board
-	m_gamePool = vector< vector<char >();
+	m_gamePool = vector< vector<char> >();
 
 	//Declaring lambda that will help loops
 	auto replaceSpace = [addFrames, replaceSpaceByFrame]()
@@ -112,7 +112,7 @@ Board::Board(unsigned int sizeX, unsigned int sizeY, char spaceChar, bool addFra
 vector< vector<char> > Board::getCharacters(unsigned int xStart, unsigned int yStart, unsigned int xEnd, unsigned int yEnd) const
 {
 	//preparing vector
-	vector< vector<char > toReturn;
+	vector< vector<char> > toReturn;
 
 	//checking variables
 	specialCheckVariables(xStart, yStart, xEnd, yEnd);
@@ -166,7 +166,7 @@ void Board::changeCharacter(char replacement, unsigned int positionX, unsigned i
 void Board::display(unsigned int xStart, unsigned int yStart, unsigned int xEnd, unsigned int yEnd) const
 {
 	//getting characters
-	vector< vector<char > v = getCharacters(xStart, yStart, xEnd, yEnd);
+	vector< vector<char> > v = getCharacters(xStart, yStart, xEnd, yEnd);
 
 	//===displaying===
 	
