@@ -20,7 +20,7 @@ This projects uses ncurses in wide version and [nlohmann JSON](https://github.co
 
 ## Building
 To build Console-Game you need to have installed at last [cmake 3.0](https://cmake.org/download/) and use it to build.  
-**TO COMPILE IT ON WINDOWS YOU NEED MINGW COMPILER**.
+**TO COMPILE IT ON WINDOWS YOU NEED MINGW COMPILER**. [Here](https://github.com/jackvz/ncurses-examples/) you have tutorial.
 
 This example shows how to do it on linux with make.
 
