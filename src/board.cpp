@@ -26,11 +26,9 @@
 ///////////////////////////////////////////////////////////
 
 #include "board.h"
-
-#ifdef CURSES_AVAILABLE
 #include <algorithm>
 #include <ctime>
-
+#include <ncurses.h>
 
 Board::Board(unsigned int sizeX, unsigned int sizeY, char spaceChar, bool addFrames, bool replaceSpaceByFrame, char frameChar)
 	:m_frames(addFrames), m_space(spaceChar), m_frame(frameChar)
@@ -378,4 +376,3 @@ void Board::specialCheckVariables(unsigned int& xStart, unsigned int& yStart, un
 	//you can uncomment it to check is method working well
 	//printw("Points: %u %u %u %u\n", xStart, yStart, xEnd, yEnd);
 }
-#endif

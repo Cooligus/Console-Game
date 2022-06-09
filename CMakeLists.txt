@@ -73,7 +73,6 @@ set(CURSES_NEED_WIDE TRUE)
 
 #Find and include curses (MinGW is needed if you want to compile it on Windows)
 find_package(Curses REQUIRED)
-include_directories(${CURSES_INCLUDE_DIR})
 target_link_libraries(Console-Game PRIVATE ${CURSES_LIBRARIES})
 
 # Install project stuffs

@@ -27,6 +27,7 @@
 
 #include "game.h"
 #include <fstream>
+#include <ncurses.h>
 #include <locale>
 
 //define main function

@@ -26,6 +26,7 @@
 ///////////////////////////////////////////////////////////
 
 #include "game.h"
+#include <ncurses.h>
 #include <cctype>
 
 Game::Game(unsigned int sizeX, unsigned int sizeY, unsigned int playerPositionX, unsigned int playerPositionY, unsigned int enemiesAmount, bool addFrames, bool replaceSpaceByFrame, char spaceChar, char frameChar, char playerSprite, char pointSprite, char enemySprite)
