@@ -26,7 +26,6 @@ jobs:
       uses: lukka/run-vcpkg@v10
       with:
         runVcpkgInstall: 'ncurses'
-        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
 
     - name: Configure CMake
       uses: lukka/run-cmake@v3.0
