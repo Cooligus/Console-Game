@@ -22,11 +22,6 @@ jobs:
     - name: Get CMake
       uses: lukka/get-cmake@latest
 
-    - name: Install ncurses
-      uses: lukka/run-vcpkg@v10
-      with:
-        runVcpkgInstall: 'ncurses'
-
     - name: Configure CMake
       uses: lukka/run-cmake@v3.0
       with:

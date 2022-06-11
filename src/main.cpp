@@ -52,7 +52,7 @@ int main()
 	game.show();
 
 	//do until end
-	while (1)
+	while (true)
 	{
 		//generate next frame
 		game.newFrame();

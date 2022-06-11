@@ -64,8 +64,8 @@ list(APPEND CONF_NAMES
 
 list(APPEND CONF_DEFS
     "ConfigCG.json"
-    "20"
-    "20"
+    "10"
+    "10"
     "2"
     "true"
     "false"

@@ -30,6 +30,8 @@
 #include <ctime>
 #include <ncurses.h>
 
+#include <iostream>
+
 Board::Board(unsigned int sizeX, unsigned int sizeY, char spaceChar, bool addFrames, bool replaceSpaceByFrame, char frameChar)
 	:m_frames(addFrames), m_space(spaceChar), m_frame(frameChar)
 {
@@ -43,11 +45,11 @@ Board::Board(unsigned int sizeX, unsigned int sizeY, char spaceChar, bool addFra
 		if (sizeY < 4) sizeY = 4;
 	}
 
-	//Setting _sizes
-	m_sizeX = sizeX;
-	m_sizeY = sizeY;
+    //Setting _sizes
+    m_sizeX = sizeX;
+    m_sizeY = sizeY;
 
-	//Preparing to make board
+    //Preparing to make board
 	m_gamePool = vector< vector<char> >();
 
 	//Declaring lambda that will help loops
@@ -168,20 +170,19 @@ void Board::display(unsigned int xStart, unsigned int yStart, unsigned int xEnd,
 	//getting characters
 	vector< vector<char> > v = getCharacters(xStart, yStart, xEnd, yEnd);
 
-	//===displaying===
-	
-	//main loop working on axle y
-	for (int i = 0; i < v.size(); i++)
+	//display all board
+    for(int i = 0; i<v.size();i++)
 	{
-		//loop working on axle x
-		for (int j = 0; j < v[i].size(); j++)
+        for(int j = 0; j<v.size();j++)
 		{
 			//displaying on console
 			printw(&v[i][j]);
 		}
-		//making new line
-		printw("\n");
-	}
+        printw("Strange effect: %u '%s'\n", i, &v[i][2]);
+
+        //making new line
+        printw("\n");
+    }
 }
 
 unsigned int Board::getRanNumInsideOnX(bool setSeed) const

@@ -29,6 +29,7 @@
 #include <fstream>
 #include <iostream>
 #include <locale>
+#include <string>
 
 //define function
 nlohmann::json getConfigFromJSON(std::string path)
@@ -38,21 +39,22 @@ nlohmann::json getConfigFromJSON(std::string path)
 
 	//new in-file stream
 	std::ifstream file(path + "@ConfigCG@", std::ifstream::in);
+    nlohmann::json configContent;
 
 	//check is file good and if not close it
-	if (!file.good())
-	{
-		//close stream
-		file.close();
-	}
+    try
+    {
+        file.good();
+        configContent = nlohmann::json::parse(file)["config"];
+    }
+    catch (...)
+    {
+        file.close();
+    };
+
 	//read json and put config into config (sense)
-	else
-	{
-		//parse json file
-		nlohmann::json fileContent = nlohmann::json::parse(file);
-		nlohmann::json configContent = fileContent["config"];
-        toReturn = setupConfig(configContent);
-	}
+	//parse json file
+    toReturn = setupConfig(configContent);
 
 	return toReturn;
 }
@@ -145,7 +147,7 @@ void setupJSONVariable<VarType::UNSIGNED>(nlohmann::json originalConfig, nlohman
 	if (checkJSON<VarType::UNSIGNED>(originalConfig, varName))
         config[varName] = originalConfig[varName];
 	else
-        config[varName] = defaultValue;
+        config[varName] = std::stoi(defaultValue);
 }
 
 //define boolean typed setup
@@ -155,7 +157,7 @@ void setupJSONVariable<VarType::BOOL>(nlohmann::json originalConfig, nlohmann::j
 	if (checkJSON<VarType::BOOL>(originalConfig, varName))
 		config[varName] = originalConfig[varName];
 	else
-		config[varName] = defaultValue;
+		std::istringstream(defaultValue) >> config[varName];
 }
 
 //define string typed setup

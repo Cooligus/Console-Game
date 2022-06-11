@@ -33,6 +33,7 @@ project (Console-Game VERSION 1.5.1)
 
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(BIN_DIR "${CMAKE_CURRENT_BINARY_DIR}/src")
+set(CMAKE_CXX_FLAGS "-lncurses")
 
 # Set project executable
 add_executable (Console-Game
@@ -73,16 +74,10 @@ endif()
 set(CURSES_NEED_NCURSES TRUE)
 set(CURSES_NEED_WIDE TRUE)
 
-option(MINGW_NCURSES_PATH "Path to ncurses if it is compiled via MinGW")
-
 #Find and include curses (MinGW is needed if you want to compile it on Windows)
 if(NOT WIN32)
     find_package(Curses REQUIRED)
     target_link_libraries(Console-Game PRIVATE ${CURSES_LIBRARIES})
-else()
-    add_library(NCurses INTERFACE)
-    target_include_directories(Console-Game INTERFACE "${MINGW_NCURSES_PATH}")
-    target_link_libraries(Console-Game PRIVATE NCurses)
 endif()
 
 # Install project stuffs
