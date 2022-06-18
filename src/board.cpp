@@ -29,6 +29,7 @@
 #include <algorithm>
 #include <ctime>
 #include <ncurses.h>
+#include <string>
 
 #include <iostream>
 
@@ -171,17 +172,9 @@ void Board::display(unsigned int xStart, unsigned int yStart, unsigned int xEnd,
 	vector< vector<char> > v = getCharacters(xStart, yStart, xEnd, yEnd);
 
 	//display all board
-    for(int i = 0; i<v.size();i++)
+    for(vector<char> toWrite : v)
 	{
-        for(int j = 0; j<v.size();j++)
-		{
-			//displaying on console
-			printw(&v[i][j]);
-		}
-        printw("Strange effect: %u '%s'\n", i, &v[i][2]);
-
-        //making new line
-        printw("\n");
+		printw("%s\n", std::string(std::begin(toWrite), std::end(toWrite)).c_str());
     }
 }
 
