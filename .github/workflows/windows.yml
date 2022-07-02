@@ -25,7 +25,7 @@ jobs:
         runVcpkgInstall: zlib:x64-mingw-dynamic
 
     - name: Get CMake
-      uses: lukka/get-cmake@v3.0
+      uses: lukka/get-cmake@v3.18.0
 
     - name: Configure CMake
       uses: lukka/run-cmake@v3.0
