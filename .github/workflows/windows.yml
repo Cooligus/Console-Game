@@ -18,16 +18,21 @@ jobs:
       
     - name: Set up MinGW
       uses: egor-tensin/setup-mingw@v2
+      
+    - name: Set up vcpkg
+      uses: lukka/run-vcpkg@v6
+      with:
+        runVcpkgInstall: zlib:x64-mingw-dynamic
 
     - name: Get CMake
-      uses: lukka/get-cmake@latest
+      uses: lukka/get-cmake@v3.0
 
     - name: Configure CMake
       uses: lukka/run-cmake@v3.0
       with:
         useVcpkgToolchainFile: true
         buildDirectory: ${{github.workspace}}/build
-        cmakeAppendedArgs: "MinGW Makefiles"
+        cmakeAppendedArgs: "-G \"MinGW Makefiles\""
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
