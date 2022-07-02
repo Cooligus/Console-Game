@@ -1,5 +1,3 @@
-name: CMake on Ubuntu
-
 on:
   push:
     branches: [ master ]
@@ -16,7 +14,18 @@ jobs:
     # well on Windows or Mac.  You can convert this to a matrix build if you need
     # cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            triplet: x64-linux
+            build-type: RelWithDebInfo
+          - os: macos-latest
+            triplet: x64-osx
+            build-type: RelWithDebInfo
 
     steps:
     - uses: actions/checkout@v2
