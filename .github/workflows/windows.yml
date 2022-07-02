@@ -19,8 +19,9 @@ jobs:
     - name: Set up vcpkg
       uses: lukka/run-vcpkg@v6
       with:
-        runVcpkgInstall: zlib:x64-mingw-dynamic
-        vcpkgArguments: --triplet=x64-mingw-dynamic
+        vcpkgArguments: "install zlib:x64-mingw-dynamic --triplet=x64-mingw-dynamic"
+        vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+        vcpkgGitCommitId: '57bd7102d9fd880daa1b0958692294c4a125f6d8'
       
     - name: Set up MinGW
       uses: egor-tensin/setup-mingw@v2
