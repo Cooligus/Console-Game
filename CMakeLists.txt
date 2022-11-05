@@ -61,7 +61,7 @@ if(nlohmann_json_FOUND EQUAL 1)
     target_link_libraries(Console-Game PRIVATE nlohmann_json::nlohmann_json)
 else()
     FILE(DOWNLOAD 
-        "https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp"
+        "https://github.com/nlohmann/json/releases/download/v3.10.0/json.hpp"
         "${CMAKE_BINARY_DIR}/src/nlohmann/json.hpp"
     )
     add_library(nlohmann_json INTERFACE)
