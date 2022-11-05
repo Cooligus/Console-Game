@@ -24,10 +24,6 @@ jobs:
 
     - name: Configure CMake
       uses: lukka/run-cmake@v3.0
-      with:
-        useVcpkgToolchainFile: true
-        buildDirectory: ${{github.workspace}}/build
-        cmakeAppendedArgs: "-G \"MinGW Makefiles\""
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
