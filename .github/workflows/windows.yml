@@ -16,11 +16,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: msys2/setup-msys2@v2
-      with:
-        update: true
-        install: >-
-          mingw-w64-x86_64-ncurses
+#    - uses: msys2/setup-msys2@v2
+#      with:
+#        update: true
+#        install: >-
+#          mingw-w64-x86_64-ncurses
        
     - name: Get CMake
       uses: lukka/get-cmake@v3.18.0
