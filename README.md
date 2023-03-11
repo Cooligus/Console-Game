@@ -15,6 +15,12 @@ It's a really tiny project that is a game you can play in console. If you want t
 ## General info
 There you moving by a some face character or different, and you have to earn some points by moving on dollar or different character. There actually nothing more.
 
+## Screenshots
+![Example screenshot 1](rc/screenshots/First.png)
+![Example screenshot 2](rc/screenshots/Second.png)
+![Example screenshot 3](rc/screenshots/Third.png)
+![Example screenshot 4](rc/screenshots/Fourth.png)
+
 ## Dependencies
 This projects uses ncurses in wide version and [nlohmann JSON](https://github.com/nlohmann/json).
 
@@ -30,12 +36,6 @@ cd console-game
 cmake -B build/
 make
 ```
-
-## Screenshots
-![Example screenshot 1](rc/screenshots/First.png)
-![Example screenshot 2](rc/screenshots/Second.png)
-![Example screenshot 3](rc/screenshots/Third.png)
-![Example screenshot 4](rc/screenshots/Fourth.png)
 
 ## Config
 If you want to use config you must put it into same folder as Console-Game. There are all variables you can change. You delete them if you want and in this case game will use default content of delete variable. But remember config doesn't support emoji. [See config file.](rc/ConfigCG.in.json)
